@@ -1,23 +1,22 @@
 //Use node src/server.js to run the server
 // This is a simple Express server that listens on port 8000
+const articleInfo = [
+    {name: 'learn-node', upvotes: 0},
+    {name: 'learn-react', upvotes: 0},
+    {name: 'mongodb', upvotes: 0}
+]
 
 import express from 'express';
 const app = express();
 
 app.use(express.json()); // If request sees a json request, process it in req.body.name
 
-//when putting localhost:8000/hello in the browser as a get request, it will return "Hello from a GET endpoint!"
-app.get('/hello', function(req, res) {
-    res.send('Hello, ' +req.body.name+ ' from a GET endpoint!');
-});
+// This post request will return message with upvoted counts from in memory
+app.post('/api/articles/:name/upvote', (req, res) => {
+    const article = articleInfo.find(a => a.name === req.params.name);
+    article.upvotes += 1;
 
-app.get('/hello/:name', function(req, res) {
-    res.send('Hello, ' +req.params.name);
-});
-
-//when putting localhost:8000/hello in the browser as a post request, it will return "Hello from a POST endpoint!"
-app.post('/hello', function(req, res) {
-    res.send('Hello, ' +req.body.name+ ' from a POST endpoint!');
+    res.send('Success! The article ' + req.params.name + ' now has ' + article.upvotes + ' upvotes!');
 });
 
 //listening on port 8000
