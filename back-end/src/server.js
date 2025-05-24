@@ -11,6 +11,10 @@ app.get('/hello', function(req, res) {
     res.send('Hello, ' +req.body.name+ ' from a GET endpoint!');
 });
 
+app.get('/hello/:name', function(req, res) {
+    res.send('Hello, ' +req.params.name);
+});
+
 //when putting localhost:8000/hello in the browser as a post request, it will return "Hello from a POST endpoint!"
 app.post('/hello', function(req, res) {
     res.send('Hello, ' +req.body.name+ ' from a POST endpoint!');
