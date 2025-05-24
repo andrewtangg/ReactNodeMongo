@@ -1,4 +1,7 @@
-//Use node src/server.js to run the server
+
+//After npm install --save-dev nodemon, you can run the server with nodemon by using the command:
+//npx nodemon src/server.js
+//because we defined npx nodemon src/server.js in the scripts for dev, we can just use npm run dev
 // This is a simple Express server that listens on port 8000
 const articleInfo = [
     {name: 'learn-node', upvotes: 0},
