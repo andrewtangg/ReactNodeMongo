@@ -6,9 +6,10 @@ import './App.css'
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage';
 import ArticlesListPage from './pages/ArticlesListPage';
-import ArticlePage from './pages/ArticlePage';
+import ArticlePage, { loader as articlerLoader} from './pages/ArticlePage'; //import articleLoader and loads all data needed for the ArticlePage component
 import Layout from './Layout';
 import NotFoundPage from './pages/NotFoundPage';
+import axios from 'axios';
 
 const routes = [{
   path: '/',
@@ -25,7 +26,8 @@ const routes = [{
     element: <ArticlesListPage />
   }, {
     path: '/articles/:name',
-    element: <ArticlePage />
+    element: <ArticlePage />,
+    loader: articlerLoader,
   }]
 }]
 
