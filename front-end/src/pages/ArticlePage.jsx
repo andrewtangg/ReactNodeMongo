@@ -14,18 +14,25 @@ export default function ArticlePage() {
   const article = articles.find(article => article.name === name);
   
   async function onUpvoteClicked(){
-    const response = axios.post('/api/articles/' + name + '/upvote');
-    const updatedArticleData = response.data;
-    setUpvotes(updatedArticleData.upvotes);
+    const response = axios.post('/api/articles/' + name + '/upvote')
+    .then(response =>{
+      console.log(response.data);
+      const updatedArticleData = response.data;
+      setUpvotes(updatedArticleData.upvotes, response.data);
+    });
   }
 
   async function onAddComment({nameText, commentText}){
     const response = axios.post('/api/articles/' + name + '/comments', {
       postedBy: nameText,
       text: commentText
+    }).then(response => {
+      console.log(response.data);
+      const updatedArticleData = response.data;
+      setComments([...updatedArticleData.comments,response.data]);
     });
-    const updatedArticleData = response.data;
-    setComments(updatedArticleData.comments);
+    
+    
   }
   return (
     <>
