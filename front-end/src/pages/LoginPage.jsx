@@ -22,9 +22,10 @@ export default function LoginPage() {
     <>
         <h1>Log in</h1>
         {error && <p>{error}</p>}
-        <input placeholder='abc@gmail.com'
+        <input 
+        placeholder='abc@gmail.com'
         value={email}
-        onChange={e=> setEmail=(e.target.value)}/>
+        onChange={e=> setEmail(e.target.value)}/>
         <input 
         placeholder='password'
         type='password'

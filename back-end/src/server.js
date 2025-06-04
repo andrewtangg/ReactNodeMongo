@@ -1,10 +1,23 @@
 import express from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb';
+import admin from 'firebase-admin'; //used for protection on API endpoints
+import fs from 'fs';
+
+const credentials = JSON.parse(
+    fs.readFileSync('./credentials.json')
+);
+
+admin.initializeApp({
+  credential: admin.credential.cert(credentials)
+});
+
+
 //After npm install --save-dev nodemon, you can run the server with nodemon by using the command:
 //npx nodemon src/server.js
 //because we defined npx nodemon src/server.js in the scripts for dev, we can just use npm run dev
 // This is a simple Express server that listens on port 8000
 
+//npm install firebase-admin
 const app = express();
 
 app.use(express.json()); // If request sees a json request, process it in req.body.name
