@@ -42,25 +42,48 @@ async function connrectToDb() {
 
 app.get('/api/articles/:name', async (req, res) => {
     const { name } = req.params;
-
-
-
     const article = await db.collection('articles').findOne({ name });
-
     res.json(article);
+});
 
+//want the app to use the firebase admin to verify the user for any post requests but not for get requests
+app.use(async function(req,res,next){
+    const {authtoken} = req.headers;
+    if (authtoken){
+        const user = await admin.auth().verifyIdToken(authtoken);
+        req.user = user;
+        next();
+    }else {
+        res.sendStatus(400);
+    }
 });
 
 
 // This post request will return message with upvoted counts from in memory
 app.post('/api/articles/:name/upvote', async (req, res) => {
     const { name } = req.params
-    const updatedArticle = await db.collection('articles').findOneAndUpdate(
-        { name }, 
-        {$inc: {upvotes: 1 }
+    const { uid } = req.user;
+
+    const article = await db.collection('articles').findOne({ name });
+
+    const upvoteIds = article.upvoteIds || [];
+    
+    const canUpvote = uid && !upvoteIds.includes(uid);
+
+
+    if (canUpvote){
+    const updatedArticle = await db.collection('articles').findOneAndUpdate({ name }, { 
+        $inc: { upvotes: 1 },
+        $push: { upvoteIds: uid},
+    }, {
+        returnDocument: 'after', // This option ensures that the updated document is returned after the update operation
     });
 
+
     res.json(updatedArticle);
+    } else {
+        res.sendStatus(403); // Forbidden
+    }
 });
 
 app.post('/api/articles/:name/comments', async (req, res) => {
