@@ -14,6 +14,11 @@ import express from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import admin from 'firebase-admin'; //used for protection on API endpoints
 import fs from 'fs';
+import path from 'path';
+
+import {fileURLToPath} from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const credentials = JSON.parse(
     fs.readFileSync('./credentials.json')
@@ -46,6 +51,15 @@ async function connrectToDb() {
 
     db = client.db('full-stack-react-db');
 }
+
+//Once dist folder is under back-end need to have these two
+//When running npm run dev in backend then the front end code will be running
+//thru the back-end because of dist folder after npm run build
+app.use(express.static(path.join(__dirname, '../dist')))
+
+app.get(/^(?!\/api).+/, (req,res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
 
 app.get('/api/articles/:name', async (req, res) => {
     const { name } = req.params;
@@ -113,11 +127,15 @@ app.post('/api/articles/:name/comments', async (req, res) => {
     res.json(updatedArticle);
 });
 
+
+const PORT = process.env.PORT || 8000;
+
+
 async function start() {
         await connrectToDb();
         //listening on port 8000
-    app.listen(8000, function() {
-    console.log('Server is listening on port 8000');
+    app.listen(PORT, function() {
+    console.log('Server is listening on port '+ PORT);
 });
     }
 
