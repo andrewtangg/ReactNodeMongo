@@ -1,3 +1,15 @@
+//After npm install --save-dev nodemon, you can run the server with nodemon by using the command:
+//npx nodemon src/server.js
+//because we defined npx nodemon src/server.js in the scripts for dev, we can just use npm run dev
+// This is a simple Express server that listens on port 8000
+
+//1. npm install express
+//2. npm install --save-dev nodemon
+//3. add npx nodemon src/server.js in scripts jsonks
+//3. npm install firebase-admin
+//4. create a <root>/data/db directory when installing mongodb
+//5. install mongosh as a separate installation from mongodb to allow for CRUD operations
+
 import express from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import admin from 'firebase-admin'; //used for protection on API endpoints
@@ -12,12 +24,7 @@ admin.initializeApp({
 });
 
 
-//After npm install --save-dev nodemon, you can run the server with nodemon by using the command:
-//npx nodemon src/server.js
-//because we defined npx nodemon src/server.js in the scripts for dev, we can just use npm run dev
-// This is a simple Express server that listens on port 8000
 
-//npm install firebase-admin
 const app = express();
 
 app.use(express.json()); // If request sees a json request, process it in req.body.name

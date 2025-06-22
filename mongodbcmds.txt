@@ -1,0 +1,8 @@
+#Inserts an array of json objects in db.articles 
+db.articles.insertMany([{ name: 'learn-node', upvotes: 0, comments: [] },{ name: 'learn-react', upvotes: 0, comments: [] },{ name: 'mongodb', upvotes: 0, comments: [] },])
+
+#displays all values in db.articles in a pretty format
+db.articles.find({}).pretty() 
+
+#queries specific article based on name
+db.articles.findOne({name: "learn-node"})
