@@ -37,7 +37,9 @@ app.use(express.json()); // If request sees a json request, process it in req.bo
 let db;
 
 async function connrectToDb() {
-    const uri = 'mongodb://127.0.0.1:27017';
+    const uri = !process.env.MONGODB_USERNAME
+    ? 'mongodb://127.0.0.1:27017'
+    : `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.yhowvx9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
     const client = new MongoClient(uri, {
         serverApi: {

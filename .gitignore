@@ -1,2 +1,5 @@
 back-end/credentials.json
 back-end/dist
+back-end/.env
+onlinemongodbconnect.txt
+back-end/prod-env.yml
