@@ -11,7 +11,7 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCl0hhSAL-FIqHD7qRSKJTp-iCIt5DY3mw",
+  apiKey: "",
   authDomain: "full-stack-react-eed33.firebaseapp.com",
   projectId: "full-stack-react-eed33",
   storageBucket: "full-stack-react-eed33.firebasestorage.app",
